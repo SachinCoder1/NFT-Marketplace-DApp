@@ -9,10 +9,10 @@ export const navLinks = [
     },
     {
         title: "My Listed NFTs",
-        link: "/my-nfts"
+        link: "/my-items"
     },
     {
         title: "Profile",
-        link: "/profile"
+        link: "/my-listed-items"
     },
 ]

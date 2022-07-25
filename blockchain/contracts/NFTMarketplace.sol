@@ -5,11 +5,13 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 /* Errors */
 
 error NFTMarketplace__ItemPriceIsLessThenZero();
 error NFTMarketplace__ItemPriceNotMet();
+error NFTMarketplace__YouAreNotOwnerOfThisItem();
 
 contract NFTMarketplace is ReentrancyGuard {
     using Counters for Counters.Counter;
@@ -51,9 +53,32 @@ contract NFTMarketplace is ReentrancyGuard {
         bool sold
     );
 
+    event ItemBought(
+        address indexed nftAddress,
+        uint256 indexed tokenId,
+        address seller,
+        address owner,
+        uint256 price,
+        bool sold
+    );
+
+    // event ItemPriceUpdate (
+    //     address indexed nftAddress,
+    //     uint256 tokenId
+    // )
+
+    // event ItemResell(
+    //     address indexed nftAddress,
+    //     uint256 indexed tokenId,
+    //     address seller,
+    //     address owner,
+    //     uint256 price,
+    //     bool sold
+    // );
+
     /* Logics */
 
-    function getListingPrice() external view returns(uint256) {
+    function getListingPrice() external view returns (uint256) {
         return listingPrice;
     }
 
@@ -126,8 +151,7 @@ contract NFTMarketplace is ReentrancyGuard {
         return items;
     }
 
-
-// List a item;
+    // List a item;
     function listItem(
         address _nftAddress,
         uint256 _tokenId,
@@ -163,6 +187,19 @@ contract NFTMarketplace is ReentrancyGuard {
         );
     }
 
+    // Update Price
+    function updateItemPrice(uint256 _itemId, uint256 _price) external {
+        if (msg.sender != Items[_itemId].seller) {
+            revert NFTMarketplace__YouAreNotOwnerOfThisItem();
+        }
+
+        if (_price <= 0) {
+            revert NFTMarketplace__ItemPriceIsLessThenZero();
+        }
+
+        Items[_itemId].price = _price;
+    }
+
     // Buy Item
     function buyItem(address _nftAddress, uint256 _itemId)
         external
@@ -182,6 +219,46 @@ contract NFTMarketplace is ReentrancyGuard {
         Items[_itemId].owner = payable(msg.sender);
         Items[_itemId].sold = true;
         s_nftSold.increment();
+
+        emit ItemBought(
+            _nftAddress,
+            tokenId,
+            address(0),
+            msg.sender,
+            price,
+            true
+        );
         payable(owner).transfer(listingPrice);
+    }
+
+    // Resell
+    function resellItem(
+        address _nftAddress,
+        uint256 _tokenId,
+        uint256 _price
+    ) public payable {
+        if (Items[_tokenId].owner != msg.sender) {
+            revert NFTMarketplace__YouAreNotOwnerOfThisItem();
+        }
+        if (msg.value != listingPrice) {
+            revert NFTMarketplace__ItemPriceNotMet();
+        }
+        Items[_tokenId].sold = false;
+        Items[_tokenId].price = _price;
+        Items[_tokenId].seller = payable(msg.sender);
+        Items[_tokenId].owner = payable(address(this));
+        s_nftSold.decrement();
+
+        IERC721(_nftAddress).transferFrom(msg.sender, address(this), _tokenId);
+        // emit ItemBought(
+        //     _nftAddress,
+        //     _tokenId,
+        //     address(0),
+        //     msg.sender,
+        //     price,
+        //     true
+        // );
+
+        // _transfer(msg.sender, address(this), _tokenId);
     }
 }

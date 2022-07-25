@@ -52,7 +52,6 @@ export default function ListItem() {
     let event = tx.events[0];
     let value = event.args[2];
     let tokenId = value.toNumber();
-    console.log(formData.price);
 
     let convertedPrice = ethers.utils.parseUnits(formData.price, "ether");
     const nftMarketPlaceContract = new ethers.Contract(

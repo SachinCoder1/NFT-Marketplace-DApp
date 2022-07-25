@@ -6,21 +6,26 @@ import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
 import axios from "axios";
 import Web3Modal from "web3modal";
 import Card from "../../subcomponents/cards/Card";
+import Link from 'next/link'
 
-export default function AllNFTs() {
+export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const loadAllNFTs = async () => {
+  const loadMyNFTs = async () => {
     setLoading(true);
-    const provider = new ethers.providers.JsonRpcProvider();
-    const nftContract = new ethers.Contract(nftAddress, NFTAbi.abi, provider);
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    const nftContract = new ethers.Contract(nftAddress, NFTAbi.abi, signer);
     const nftMarketPlaceContract = new ethers.Contract(
       nftMarketplaceAddress,
       NFTMarketplaceAbi.abi,
-      provider
+      signer
     );
-    const data = await nftMarketPlaceContract.getAllListedItems();
+    const data = await nftMarketPlaceContract.getOwnerListedItems();
 
     const allItems = await Promise.all(
       data?.map(async (i) => {
@@ -47,39 +52,13 @@ export default function AllNFTs() {
     setLoading(false);
   };
 
-  const buyNFT = async (nft) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-
-    const signer = provider.getSigner();
-    const nftMarketPlaceContract = new ethers.Contract(
-      nftMarketplaceAddress,
-      NFTMarketplaceAbi.abi,
-      signer
-    );
-
-    let convertedPrice = ethers.utils.parseUnits(nft.price.toString(), "ether");
-
-    const transaction = await nftMarketPlaceContract.buyItem(
-      nftAddress,
-      nft.tokenId,
-      {
-        value: convertedPrice,
-      }
-    );
-    await transaction.wait();
-    await loadAllNFTs();
-  };
-
   useEffect(() => {
     const load = async () => {
-      await loadAllNFTs();
+      await loadMyNFTs();
       console.log(allNFTs);
     };
     load();
   }, []);
-
   return (
     <div>
       <div>
@@ -97,7 +76,8 @@ export default function AllNFTs() {
           ))
         ) : (
           <div className="text-center font-semibold text-base">
-            No NFTs found
+            No purchase History found.
+            <Link href="/">Buy Now some</Link>
           </div>
         )}
       </div>
