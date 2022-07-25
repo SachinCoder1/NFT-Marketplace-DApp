@@ -151,6 +151,10 @@ contract NFTMarketplace is ReentrancyGuard {
         return items;
     }
 
+    function getPerticularItem(uint256 _itemId) external view returns(Item memory){
+        return Items[_itemId];
+    }
+
     // List a item;
     function listItem(
         address _nftAddress,

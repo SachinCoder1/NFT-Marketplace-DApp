@@ -6,8 +6,10 @@ import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
 import axios from "axios";
 import Web3Modal from "web3modal";
 import Card from "../../subcomponents/cards/Card";
+import { useRouter } from "next/router";
 
 export default function AllNFTs() {
+  const router = useRouter();
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -89,7 +91,8 @@ export default function AllNFTs() {
               <Card
                 nft={nft}
                 onClick={() => {
-                  buyNFT(nft);
+                  // buyNFT(nft);
+                  router.push(`/${nft.tokenId}`)
                   console.log("Onclicked on buy button.");
                 }}
               />

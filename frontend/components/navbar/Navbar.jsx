@@ -8,7 +8,7 @@ export default function Navbar() {
   const router = useRouter();
   return (
     <div className="flex justify-between items-center gap-x-10 m-2 p-2 border-b-2">
-      <div className="flex gap-x-10">
+      <div className="flex items-center gap-x-10">
         {/* <div className="!text-3xl text-orange-400 font-bold px-2"> */}
         <Logo />
         {/* </div> */}
