@@ -3,7 +3,6 @@ import Logo from "../../subcomponents/logo/Logo";
 import Link from "next/link";
 import { navLinks } from "../../data";
 import { useRouter } from "next/router";
-import { ConnectButton } from "web3uikit";
 
 export default function Navbar() {
   const router = useRouter();
@@ -30,9 +29,9 @@ export default function Navbar() {
           ))}
         </div>
       </div>
-      <div>
+      {/* <div>
         <ConnectButton moralisAuth={false} />
-      </div>
+      </div> */}
     </div>
   );
 }

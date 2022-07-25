@@ -1,11 +1,10 @@
-import Navbar from "../components/navbar/Navbar";
+import AllNFTs from "../components/dashboard/AllNFTs";
+import MainLayout from "../components/layouts/MainLayout";
 
 export default function Home() {
-
   return (
-    <div>
-    <Navbar />
-      <div>Hey</div>
-    </div>
+    <MainLayout>
+      <AllNFTs />
+    </MainLayout>
   );
 }

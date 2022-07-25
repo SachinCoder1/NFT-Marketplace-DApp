@@ -1,11 +1,13 @@
-import React from 'react';
+import React from "react";
+import MainLayout from "../components/layouts/MainLayout";
+import ListItem from "../components/list-item/ListItem";
 
 const Sell = () => {
   return (
-    <div>
-      Sell
-    </div>
+    <MainLayout>
+      <ListItem />
+    </MainLayout>
   );
-}
+};
 
 export default Sell;
