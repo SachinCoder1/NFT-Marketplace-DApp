@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import Link from "next/link";
 import {AiOutlineArrowRight} from 'react-icons/ai'
 import { useRouter } from 'next/router';
+import BtnMain from './../btns/BtnMain';
 
 export default function Card({ nft, showBtn = true, onClick }) {
   const router = useRouter();
