@@ -74,13 +74,13 @@ export default function AllNFTs() {
     await loadAllNFTs();
   };
 
-  useEffect(() => {
-    const load = async () => {
-      await loadAllNFTs();
-      console.log(allNFTs);
-    };
-    load();
-  }, []);
+  // useEffect(() => {
+  //   const load = async () => {
+  //     await loadAllNFTs();
+  //     console.log(allNFTs);
+  //   };
+  //   load();
+  // }, []);
 
   return (
     <div>

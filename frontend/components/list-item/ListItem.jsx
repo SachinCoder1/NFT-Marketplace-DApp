@@ -10,6 +10,8 @@ import axios from "axios";
 import Card from "../../subcomponents/cards/Card";
 import Input from "../../subcomponents/inputs/Input";
 import Button from "../../subcomponents/btns/Button";
+import { AiOutlineArrowUp } from "react-icons/ai";
+import BtnMain from "../../subcomponents/btns/BtnMain";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
@@ -95,7 +97,7 @@ export default function ListItem() {
 
   return (
     <div className="flex justify-center">
-      <div className="w-3/6">
+      <div className="md:w-3/6">
         <form action="">
           <Input
             id="name"
@@ -121,7 +123,7 @@ export default function ListItem() {
           onChange={(e) => {
             console.log(formData.price);
             setFormData({ ...formData, price: e.target.value });
-            console.log(formData)
+            console.log(formData);
           }}
           // value={formData.price}
         />
@@ -142,9 +144,12 @@ export default function ListItem() {
             />
           )}
         </div>
-        <div className="flex justify-center">
-          <Button onClick={listAnItem} text="List NFT" />
-        </div>
+          <BtnMain
+            text="List NFT"
+            icon={<AiOutlineArrowUp className="text-2xl" />}
+            className="w-full text-lg"
+            onClick={listAnItem}
+          />
       </div>
     </div>
   );

@@ -1,18 +1,28 @@
+import {TbLayoutDashboard} from 'react-icons/tb'
+import {HiTemplate} from 'react-icons/hi'
+import {GiSellCard} from 'react-icons/gi'
+import {BiTrendingUp} from 'react-icons/bi'
+import {AiFillCrown} from 'react-icons/ai'
+
 export const navLinks = [
     {
         title: "Dashboard",
-        link: "/"
+        link: "/",
+        icon: <TbLayoutDashboard />
     },
     {
         title: "Sell NFT",
-        link: "/sell"
+        link: "/sell",
+        icon: <HiTemplate />
     },
     {
-        title: "My Listed NFTs",
-        link: "/my-items"
+        title: "My Owned NFTs",
+        link: "/my-items",
+        icon: <AiFillCrown />
     },
     {
-        title: "Profile",
-        link: "/my-listed-items"
+        title: "Creator's Dashboard ",
+        link: "/my-listed-items",
+        icon: <GiSellCard />
     },
 ]
