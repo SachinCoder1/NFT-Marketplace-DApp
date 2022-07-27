@@ -7,6 +7,7 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import Card from "../../subcomponents/cards/Card";
 import { useRouter } from "next/router";
+import Heading2 from "../../subcomponents/headings/Heading2";
 
 export default function AllNFTs() {
   const router = useRouter();

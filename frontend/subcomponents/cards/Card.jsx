@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 export default function Card({ nft, showBtn = true, onClick }) {
   const router = useRouter();
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md shadow-gray-400">
+    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
         <Link href={`/${nft.tokenId}`}>
         <img className="rounded-t-lg cursor-pointer" src={nft.image} alt={nft.name} />
         </Link>
