@@ -4,7 +4,7 @@ import MyItems from '../../components/my-items/MyItems';
 import Heading2 from '../../subcomponents/headings/Heading2';
 
 
-export default function myItems() {
+export default function MyItems() {
   return (
    <MainLayout>
     <Heading2 title="Your Purchased NFTs" />
