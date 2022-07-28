@@ -5,6 +5,7 @@ import Heading2 from "../subcomponents/headings/Heading2";
 export default function Home() {
   return (
     <MainLayout>
+      
             <Heading2 title="Dashboard" />
 
       <AllNFTs />

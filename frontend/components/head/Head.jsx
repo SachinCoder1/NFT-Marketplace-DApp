@@ -1,9 +1,8 @@
 import React from "react";
 import Head from "next/head";
 
-export default function Head({ title, description, image }) {
+export default function MainHead({ title, description, image }) {
   return (
-    <div>
       <Head>
         <title>{title || "Create Next App"}</title>
         <meta
@@ -12,6 +11,5 @@ export default function Head({ title, description, image }) {
         />
         <link rel="icon" href={image || "/favicon.ico"} />
       </Head>
-    </div>
   );
 }
