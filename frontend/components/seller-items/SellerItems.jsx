@@ -89,7 +89,7 @@ export default function SellerItems() {
             <div className="grid grid-cols-3">
               {listedNFTs.length && !loading ? (
                 listedNFTs?.map((nft, index) => (
-                  <div id={index}>
+                  <div key={index}>
                     <Card
                       nft={nft}
                       url="/my-listed-items/"
@@ -115,7 +115,7 @@ export default function SellerItems() {
             <div className="grid grid-cols-3">
               {soldNFTs.length && !loading ? (
                 soldNFTs?.map((nft, index) => (
-                  <div id={index}>
+                  <div key={index}>
                     <Card
                       nft={nft}
                       url="/my-listed-items/"

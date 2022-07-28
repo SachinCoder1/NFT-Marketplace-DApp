@@ -66,7 +66,7 @@ export default function AllNFTs() {
       <div>
         {allNFTs.length && !loading ? (
           allNFTs?.map((nft, index) => (
-            <div id={index}>
+            <div key={index}>
               <Card
                 nft={nft}
                 url=""
