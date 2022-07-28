@@ -10,7 +10,7 @@ import BtnMain from "../../../subcomponents/btns/BtnMain";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../../../components/nft-info/NftInfo";
 
-export default function Itemid() {
+export default function ListedNFTItemId() {
   const router = useRouter();
   let { itemid } = router.query;
 

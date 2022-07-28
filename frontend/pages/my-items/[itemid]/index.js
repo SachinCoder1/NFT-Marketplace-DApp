@@ -14,7 +14,7 @@ import { AiOutlineArrowRight, AiOutlineArrowUp } from "react-icons/ai";
 import NftInfo from "../../../components/nft-info/NftInfo";
 import Input from "../../../subcomponents/inputs/Input";
 
-export default function Itemid() {
+export default function MyItemId() {
   const router = useRouter();
   let { itemid } = router.query;
 
