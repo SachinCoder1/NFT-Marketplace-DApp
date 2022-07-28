@@ -7,6 +7,7 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import Card from "../../subcomponents/cards/Card";
 import Link from 'next/link'
+import Loading from "../../subcomponents/loading/Loading";
 
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
@@ -60,6 +61,9 @@ export default function MyItems() {
   }, []);
   return (
     <div>
+       {!allNFTs.length && loading ? (
+        <Loading />
+      ) : (
       <div>
         {allNFTs.length && !loading ? (
           allNFTs?.map((nft, index) => (
@@ -81,6 +85,7 @@ export default function MyItems() {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }

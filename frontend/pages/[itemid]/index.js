@@ -17,10 +17,11 @@ export default function itemid() {
 
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState();
-  const [isPurchasing, setisPurchasing] = useState(false);
+  const [isPurchasing, setIsPurchasing] = useState(false);
 
   const loadNFT = async () => {
     setLoading(true);
+    setIsPurchasing(true)
     const provider = new ethers.providers.JsonRpcProvider();
     const nftContract = new ethers.Contract(nftAddress, NFTAbi.abi, provider);
     const nftMarketPlaceContract = new ethers.Contract(
@@ -54,9 +55,11 @@ export default function itemid() {
     };
     allData();
     setLoading(false);
+    setIsPurchasing(false)
   };
 
   const buyNFT = async (price, tokenId) => {
+    setIsPurchasing(true)
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -79,6 +82,7 @@ export default function itemid() {
     );
     await transaction.wait();
     await router.push("/my-items");
+    setIsPurchasing(false)
   };
 
   useEffect(() => {
@@ -96,6 +100,7 @@ export default function itemid() {
           icon={<AiOutlineArrowRight className="text-2xl" />}
           className="w-full"
           onClick={() => buyNFT(nftData.price.toString(), nftData.tokenId)}
+          disabled={isPurchasing}
         />
       </NftInfo>
     </div>

@@ -4,10 +4,10 @@ import { Oval } from "react-loader-spinner";
 export default function SmallLoader() {
   return (
     <Oval
-          height="100"
-          width="100"
+          height="20"
+          width="20"
           radius="9"
-          color="#48bb78"
+          color="#fff"
           ariaLabel="three-dots-loading"
           wrapperStyle
           wrapperClass

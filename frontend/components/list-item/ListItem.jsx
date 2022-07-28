@@ -17,6 +17,7 @@ const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 
 export default function ListItem() {
   const router = useRouter();
+  const [isListing, setisListing] = useState(false);
   const [file, setFile] = useState();
   const [formData, setFormData] = useState({
     price: "",
@@ -41,6 +42,7 @@ export default function ListItem() {
   };
 
   const createItem = async (url) => {
+    setisListing(true)
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -71,14 +73,17 @@ export default function ListItem() {
       { value: listingPrice }
     );
     await listingTx.wait();
-
+    
     router.push("/");
+    setisListing(false)
   };
 
   const listAnItem = async () => {
+    setisListing(true)
     const { name, price, description } = formData;
     if (!name || !price || !description || !file) {
       console.log("Some feild are missing");
+      setisListing(false)
       return;
     }
 
@@ -149,6 +154,7 @@ export default function ListItem() {
             icon={<AiOutlineArrowUp className="text-2xl" />}
             className="w-full text-lg"
             onClick={listAnItem}
+            disabled={isListing}
           />
       </div>
     </div>
