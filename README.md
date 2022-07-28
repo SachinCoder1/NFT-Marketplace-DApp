@@ -2,6 +2,21 @@
 
 Complete Full Stack NFT Marketplace (Decentralized Application) using solidity language, hardhat, and next.js framework for frontend.
 
+**Dashboard**
+&nbsp;
+
+<a href="https://ibb.co/Ny2NFz6"><img src="https://i.ibb.co/71tpSFJ/Screenshot-172.png" alt="Screenshot-172" border="0"></a>
+
+&nbsp;
+&nbsp;
+&nbsp;
+
+
+**List NFT**
+&nbsp;
+
+<a href="https://ibb.co/k9G9FJj"><img src="https://i.ibb.co/dLfLytF/Screenshot-171.png" alt="Screenshot-171" border="0"></a>
+
 ## Functionalities :-
 
 - See **All Listed NFTs** without doing Login.
