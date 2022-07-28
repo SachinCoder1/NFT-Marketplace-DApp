@@ -52,8 +52,8 @@ export default function AllNFTs() {
 
 
   useEffect(() => {
-    const load = async () => {
-      await loadAllNFTs();
+    const load = () => {
+      loadAllNFTs();
     };
     load();
   }, []);
