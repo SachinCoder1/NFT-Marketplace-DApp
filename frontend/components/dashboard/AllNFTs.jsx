@@ -60,7 +60,7 @@ export default function AllNFTs() {
 
   return (
     <div>
-      {!allNFTs.length && loading ? (
+      {loading == true ? (
         <Loading />
       ) : (
       <div>
