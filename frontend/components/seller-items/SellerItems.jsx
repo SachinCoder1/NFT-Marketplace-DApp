@@ -18,6 +18,8 @@ export default function SellerItems() {
   const [soldNFTs, setSoldNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+  // Loads all the nfts which are either listed or sold of user.
   const loadMyNFTs = async () => {
     setLoading(true);
     const web3Modal = new Web3Modal();
@@ -56,8 +58,12 @@ export default function SellerItems() {
         return item;
       })
     );
+
+    // Filter to get only listed NFTs
     let currentListedItems = allItems.filter((item) => !item.sold);
     setListedNFTs(currentListedItems);
+    
+    // Filter to get only sold NFTs
     let soldItems = allItems.filter((item) => item.sold);
     setSoldNFTs(soldItems);
     console.log(soldItems);

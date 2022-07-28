@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import Logo from "../../subcomponents/logo/Logo";
 import Link from "next/link";
 import { navLinks } from "../../data";
 import { useRouter } from "next/router";
 import {
   AiOutlineMenuUnfold,
   AiOutlineMenuFold,
-  AiFillPlusCircle,
   AiOutlinePlus,
 } from "react-icons/ai";
-import { TbLayoutDashboard } from "react-icons/tb";
 import BtnMain from "../../subcomponents/btns/BtnMain";
 
 export default function Navbar() {
@@ -111,11 +108,6 @@ export default function Navbar() {
                   className="w-full !rounded-full"
                   onClick={handleClick}
                 />
-                {/* <span class="relative mr-3 cursor-pointer hover:text-gray-700">
-                  <p class="rounded-full mt-6 text-center border border-blue-500 py-2 px-8 bg-blue-500 hover:bg-blue-700 text-white">
-                    List NFT
-                  </p>
-                </span> */}
               </div>
             </div>
           </div>

@@ -6,10 +6,7 @@ import Web3Modal from "web3modal";
 import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
 import NFTAbi from "../../abi/NFT.json";
 import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
-import axios from "axios";
-import Card from "../../subcomponents/cards/Card";
 import Input from "../../subcomponents/inputs/Input";
-import Button from "../../subcomponents/btns/Button";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import BtnMain from "../../subcomponents/btns/BtnMain";
 
@@ -25,6 +22,7 @@ export default function ListItem() {
     description: "",
   });
 
+  // Onchange of image file
   const onChange = async (e) => {
     const fileData = e.target.files[0];
     try {
@@ -41,6 +39,7 @@ export default function ListItem() {
     }
   };
 
+  // Main function to list an item. First it mint an NFT and then List an nft.
   const createItem = async (url) => {
     setisListing(true)
     const web3Modal = new Web3Modal();
@@ -109,7 +108,6 @@ export default function ListItem() {
             placeholder="e.g.Monkey"
             label="Name"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            // value={formData.name}
           />
         </form>
         <Input
@@ -119,7 +117,6 @@ export default function ListItem() {
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
-          // value={formData.description}
         />
         <Input
           id="price"
@@ -130,7 +127,6 @@ export default function ListItem() {
             setFormData({ ...formData, price: e.target.value });
             console.log(formData);
           }}
-          // value={formData.price}
         />
         <Input
           id="file"
@@ -138,7 +134,6 @@ export default function ListItem() {
           label="NFT Image"
           type="file"
           onChange={onChange}
-          // value={formData.price}
         />
         <div className="">
           {file && (

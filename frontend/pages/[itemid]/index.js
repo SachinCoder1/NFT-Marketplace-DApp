@@ -6,7 +6,6 @@ import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
 import axios from "axios";
 import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
-import MainLayout from "./../../components/layouts/MainLayout";
 import BtnMain from "../../subcomponents/btns/BtnMain";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../../components/nft-info/NftInfo";

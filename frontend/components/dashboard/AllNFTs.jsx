@@ -4,7 +4,6 @@ import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
 import NFTAbi from "../../abi/NFT.json";
 import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
 import axios from "axios";
-import Web3Modal from "web3modal";
 import Card from "../../subcomponents/cards/Card";
 import { useRouter } from "next/router";
 import Loading from "../../subcomponents/loading/Loading";
@@ -14,6 +13,8 @@ export default function AllNFTs() {
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+  // Function to load all nfts (Dosen't require authentication)
   const loadAllNFTs = async () => {
     setLoading(true);
     const provider = new ethers.providers.JsonRpcProvider();
@@ -46,39 +47,13 @@ export default function AllNFTs() {
       })
     );
     setAllNFTs(allItems);
-    console.log(allNFTs);
     setLoading(false);
   };
 
-  const buyNFT = async (nft) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-
-    const signer = provider.getSigner();
-    const nftMarketPlaceContract = new ethers.Contract(
-      nftMarketplaceAddress,
-      NFTMarketplaceAbi.abi,
-      signer
-    );
-
-    let convertedPrice = ethers.utils.parseUnits(nft.price.toString(), "ether");
-
-    const transaction = await nftMarketPlaceContract.buyItem(
-      nftAddress,
-      nft.tokenId,
-      {
-        value: convertedPrice,
-      }
-    );
-    await transaction.wait();
-    await loadAllNFTs();
-  };
 
   useEffect(() => {
     const load = async () => {
       await loadAllNFTs();
-      console.log(allNFTs);
     };
     load();
   }, []);

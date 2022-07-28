@@ -12,6 +12,8 @@ import Loading from "../../subcomponents/loading/Loading";
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Only loads the NFTs which are purchased by the user.
   const loadMyNFTs = async () => {
     setLoading(true);
     const web3Modal = new Web3Modal();
@@ -25,6 +27,7 @@ export default function MyItems() {
       NFTMarketplaceAbi.abi,
       signer
     );
+    
     const data = await nftMarketPlaceContract.getOwnerListedItems();
 
     const allItems = await Promise.all(
@@ -71,10 +74,7 @@ export default function MyItems() {
               <Card
                 nft={nft}
                 url="/my-items/"
-                onClick={() => {
-                  buyNFT(nft);
-                  console.log("Onclicked on buy button.");
-                }}
+                onClick={() =>  buyNFT(nft)}
               />
             </div>
           ))

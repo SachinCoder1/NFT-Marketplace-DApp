@@ -2,8 +2,6 @@ import React from 'react'
 import MainLayout from '../../components/layouts/MainLayout';
 import MyItems from '../../components/my-items/MyItems';
 import Heading2 from '../../subcomponents/headings/Heading2';
-// import MyItems from '../components/my-items/MyItems'
-// import Heading2 from "../subcomponents/headings/Heading2"; 
 
 
 export default function myItems() {
