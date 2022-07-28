@@ -91,6 +91,7 @@ export default function AllNFTs() {
             <div id={index}>
               <Card
                 nft={nft}
+                url=""
                 onClick={() => {
                   // buyNFT(nft);
                   router.push(`/${nft.tokenId}`)

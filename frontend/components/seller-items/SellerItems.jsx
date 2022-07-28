@@ -7,8 +7,13 @@ import axios from "axios";
 import Web3Modal from "web3modal";
 import Card from "../../subcomponents/cards/Card";
 import Link from "next/link";
+import Heading3 from "../../subcomponents/headings/Heading3";
+import Loading from "../../subcomponents/loading/Loading";
+import BtnMain from "../../subcomponents/btns/BtnMain";
+import { useRouter } from "next/router";
 
 export default function SellerItems() {
+  const router = useRouter()
   const [listedNFTs, setListedNFTs] = useState([]);
   const [soldNFTs, setSoldNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,7 +32,7 @@ export default function SellerItems() {
       signer
     );
     const data = await nftMarketPlaceContract.getSellerListedItems();
-    console.log("This is your data ", data)
+    console.log("This is your data ", data);
 
     const allItems = await Promise.all(
       data?.map(async (i) => {
@@ -47,16 +52,16 @@ export default function SellerItems() {
           name: metaData.data.name,
           description: metaData.data.description,
         };
-        console.log(item)
+        console.log(item);
         return item;
       })
     );
-    let currentListedItems = allItems.filter(item => !item.sold);
+    let currentListedItems = allItems.filter((item) => !item.sold);
     setListedNFTs(currentListedItems);
-    let soldItems = allItems.filter(item => item.sold)
+    let soldItems = allItems.filter((item) => item.sold);
     setSoldNFTs(soldItems);
     console.log(soldItems);
-    console.log(currentListedItems)
+    console.log(currentListedItems);
     setLoading(false);
   };
 
@@ -69,50 +74,61 @@ export default function SellerItems() {
   }, []);
   return (
     <div>
-      <div className="grid grid-cols-2">
-        {listedNFTs.length && !loading ? (
-           
-          listedNFTs?.map((nft, index) => (
-            <div id={index}>
-              <Card
-                nft={nft}
-                onClick={() => {
-                  buyNFT(nft);
-                  console.log("Onclicked on buy button.");
-                }}
-              />
+      {!listedNFTs.length && loading ? (
+        <Loading />
+      ) : (
+        <div>
+          <div>
+            <Heading3 title="Listed NFTs" />
+            <div className="grid grid-cols-3">
+              {listedNFTs.length && !loading ? (
+                listedNFTs?.map((nft, index) => (
+                  <div id={index}>
+                    <Card
+                      nft={nft}
+                      url="/my-listed-items/"
+                      onClick={() => {
+                        buyNFT(nft);
+                        console.log("Onclicked on buy button.");
+                      }}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="font-semibold text-base flex items-center gap-x-2">
+                  No Listed NFTs found <span><BtnMain text="List Now" onClick={() => router.push("/sell")} /></span>
+                  
+                </div>
+              )}
             </div>
-          ))
-        ) : (
-          <div className="text-center font-semibold text-base">
-            No Listed NFTs found 
-            <Link href="/list">List Now</Link>
           </div>
-        )}
-      </div>
 
-      {/* Sold list */}
-      <div className="grid grid-cols-3">
-        {soldNFTs.length && !loading ? (
-          soldNFTs?.map((nft, index) => (
-            <div id={index}>
-              <Card
-                nft={nft}
-                showBtn={false}
-                onClick={() => {
-                  buyNFT(nft);
-                  console.log("Onclicked on buy button.");
-                }}
-              />
+          {/* Sold list */}
+          <div>
+            <Heading3 title="Sold NFTs" />
+            <div className="grid grid-cols-3">
+              {soldNFTs.length && !loading ? (
+                soldNFTs?.map((nft, index) => (
+                  <div id={index}>
+                    <Card
+                      nft={nft}
+                      url="/my-listed-items/"
+                      onClick={() => {
+                        buyNFT(nft);
+                        console.log("Onclicked on buy button.");
+                      }}
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="font-semibold text-base">
+                  No NFTs sold yet
+                </div>
+              )}
             </div>
-          ))
-        ) : (
-          <div className="text-center font-semibold text-base">
-            No NFTs sold yet 
-            {/* <Link href="/list">List Now</Link> */}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -5,7 +5,9 @@ import MainLayout from "../layouts/MainLayout";
 export default function NftInfo({ nftData, children }) {
   return (
     <MainLayout>
+      {!nftData ? (
         <Loading />
+      ) : (
         <div className="grid grid-cols-2 mt-6 p-2 bg-white shadow-lg">
           <div className="">
             <img className=" py-5 mx-auto" src={nftData?.image} />
@@ -24,6 +26,7 @@ export default function NftInfo({ nftData, children }) {
             <div>{children}</div>
           </div>
         </div>
+      )}
     </MainLayout>
   );
 }

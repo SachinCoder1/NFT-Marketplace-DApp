@@ -5,11 +5,11 @@ import {AiOutlineArrowRight} from 'react-icons/ai'
 import { useRouter } from 'next/router';
 import BtnMain from './../btns/BtnMain';
 
-export default function Card({ nft, showBtn = true, onClick }) {
+export default function Card({ nft, url="/" }) {
   const router = useRouter();
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
-        <Link href={`/${nft.tokenId}`}>
+        <Link href={`${url}${nft.tokenId}`}>
         <img className="rounded-t-lg cursor-pointer" src={nft.image} alt={nft.name} />
         </Link>
       <div className="p-5">
@@ -20,14 +20,12 @@ export default function Card({ nft, showBtn = true, onClick }) {
         <h5 className="mb-2 text-xl font-semibold tracking-tight text-sky-800">
           {nft.price.toString()} ETH
         </h5>
-        {showBtn && (
           <BtnMain
           text="View More"
           icon={<AiOutlineArrowRight className="text-2xl" />}
           className="w-full"
-          onClick={() => router.push(`/${nft.tokenId}`)}
+          onClick={() => router.push(`${url}${nft.tokenId}`)}
         />
-        )}
       </div>
     </div>
 

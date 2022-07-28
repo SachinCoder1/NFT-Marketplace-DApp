@@ -11,7 +11,6 @@ import Link from 'next/link'
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const loadMyNFTs = async () => {
     setLoading(true);
     const web3Modal = new Web3Modal();
@@ -67,6 +66,7 @@ export default function MyItems() {
             <div id={index}>
               <Card
                 nft={nft}
+                url="/my-items/"
                 onClick={() => {
                   buyNFT(nft);
                   console.log("Onclicked on buy button.");

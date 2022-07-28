@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { nftAddress, nftMarketplaceAddress } from "../../config/networkAddress";
-import NFTAbi from "../../abi/NFT.json";
-import NFTMarketplaceAbi from "../../abi/NFTMarketplace.json";
+import {
+  nftAddress,
+  nftMarketplaceAddress,
+} from "../../../config/networkAddress";
+import NFTAbi from "../../../abi/NFT.json";
+import NFTMarketplaceAbi from "../../../abi/NFTMarketplace.json";
 import axios from "axios";
 import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
-import MainLayout from "./../../components/layouts/MainLayout";
-import BtnMain from "../../subcomponents/btns/BtnMain";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import NftInfo from "../../components/nft-info/NftInfo";
+import BtnMain from "../../../subcomponents/btns/BtnMain";
+import { AiOutlineArrowRight, AiOutlineArrowUp } from "react-icons/ai";
+import NftInfo from "../../../components/nft-info/NftInfo";
+import Input from "../../../subcomponents/inputs/Input";
 
 export default function itemid() {
   const router = useRouter();
@@ -17,6 +20,8 @@ export default function itemid() {
 
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState();
+  const [resellPrice, setResellPrice] = useState("");
+  const [isReselling, setIsReselling] = useState(false);
   const [isPurchasing, setisPurchasing] = useState(false);
 
   const loadNFT = async () => {
@@ -56,7 +61,7 @@ export default function itemid() {
     setLoading(false);
   };
 
-  const buyNFT = async (price, tokenId) => {
+  const resellNFT = async (price, tokenId) => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -68,18 +73,24 @@ export default function itemid() {
       signer
     );
 
-    let convertedPrice = ethers.utils.parseUnits(price.toString(), "ether");
+    let convertedPrice = ethers.utils.parseUnits(price, "ether");
 
-    const transaction = await nftMarketPlaceContract.buyItem(
+    const listingPrice = await nftMarketPlaceContract.getListingPrice();
+    listingPrice = await listingPrice.toString();
+    // tokenId.toNumber();
+
+    const transaction = await nftMarketPlaceContract.resellItem(
       nftAddress,
       tokenId,
+      convertedPrice,
       {
-        value: convertedPrice,
+        value: listingPrice,
       }
     );
     await transaction.wait();
-    await router.push("/my-items");
+    await router.push("/my-listed-items");
   };
+  
 
   useEffect(() => {
     const load = async () => {
@@ -92,11 +103,27 @@ export default function itemid() {
     <div>
       <NftInfo nftData={nftData}>
         <BtnMain
-          text="Buy Now"
+          text={isReselling ? "Cancel" : "ReSell NFT"}
           icon={<AiOutlineArrowRight className="text-2xl" />}
-          className="w-full"
-          onClick={() => buyNFT(nftData.price.toString(), nftData.tokenId)}
+          className="bg-blue-500"
+          onClick={() => setIsReselling(!isReselling)}
         />
+        {isReselling && (
+          <div>
+            <Input
+              id="resellprice"
+              placeholder="e.g.10 (In Ether)"
+              label="Resell Price"
+              onChange={(e) => setResellPrice(e.target.value)}
+            />
+            <BtnMain
+              text="List NFT"
+              icon={<AiOutlineArrowUp className="text-2xl" />}
+              className="text-lg w-full"
+            //   onClick={() => alert("Feature Not Activated. Try Later ")}
+            />
+          </div>
+        )}
       </NftInfo>
     </div>
   );
