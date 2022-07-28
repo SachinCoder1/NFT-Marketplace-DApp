@@ -10,13 +10,13 @@ export default function Card({ nft, url="/" }) {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
         <Link href={`${url}${nft.tokenId}`}>
-        <img className="rounded-t-lg cursor-pointer" src={nft.image} alt={nft.name} />
+        <img className="rounded-t-lg cursor-pointer object-cover  w-96 h-72" src={nft.image} alt={nft.name} />
         </Link>
       <div className="p-5">
           <h5 className="mb-3 text-2xl font-bold tracking-tight text-sky-600">
             {nft.name}
           </h5>
-        <p className="mb-3 font-normal text-gray-600">{nft.description}</p>
+        <p className="mb-3 h-20 font-normal text-gray-600">{nft.description}</p>
         <h5 className="mb-2 text-xl font-semibold tracking-tight text-sky-800">
           {nft.price.toString()} ETH
         </h5>

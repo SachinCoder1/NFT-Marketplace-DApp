@@ -84,7 +84,7 @@ export default function AllNFTs() {
           </div>
         )}
       </div>
-      )}
+       )}
     </div>
   );
 }

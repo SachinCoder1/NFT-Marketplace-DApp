@@ -8,18 +8,20 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 /* Errors */
-
 error NFTMarketplace__ItemPriceIsLessThenZero();
 error NFTMarketplace__ItemPriceNotMet();
 error NFTMarketplace__YouAreNotOwnerOfThisItem();
 
 contract NFTMarketplace is ReentrancyGuard {
+
+    /* State Variables */
+
     using Counters for Counters.Counter;
     Counters.Counter private s_nftIds;
-    Counters.Counter private s_nftSold;
+    Counters.Counter private s_nftSold; // To count how many nfts are sold
 
     address payable private owner;
-    uint256 listingPrice = 0.025 ether;
+    uint256 listingPrice = 0.025 ether; // This is the base price every seller has to pay for every listing.
 
     /* Constructor */
     constructor() {
@@ -39,10 +41,9 @@ contract NFTMarketplace is ReentrancyGuard {
     }
 
     /* Mappings */
-    mapping(uint256 => Item) private Items;
+    mapping(uint256 => Item) private Items; // Main Mapping of all Items with tokenId
 
     /* Events */
-
     event ItemList(
         uint indexed itemId,
         address indexed nftAddress,
@@ -254,15 +255,6 @@ contract NFTMarketplace is ReentrancyGuard {
         s_nftSold.decrement();
 
         IERC721(_nftAddress).transferFrom(msg.sender, address(this), _tokenId);
-        // emit ItemBought(
-        //     _nftAddress,
-        //     _tokenId,
-        //     address(0),
-        //     msg.sender,
-        //     price,
-        //     true
-        // );
 
-        // _transfer(msg.sender, address(this), _tokenId);
     }
 }
